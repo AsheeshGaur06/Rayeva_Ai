@@ -1,31 +1,19 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-/*
-=================================================
-  BASE API CONFIG (Environment Ready)
-=================================================
-*/
+
 
 const API = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
 function App() {
 
-  /*
-  =================================================
-  MODULE 1 STATES
-  =================================================
-  */
+  /*MODULE 1 STATES*/
 
   const [description, setDescription] = useState("");
   const [categoryResult, setCategoryResult] = useState(null);
   const [categoryLoading, setCategoryLoading] = useState(false);
 
-  /*
-  =================================================
-  MODULE 2 STATES
-  =================================================
-  */
+  /*MODULE 2 STATES*/
 
   const [budget, setBudget] = useState("");
   const [eventType, setEventType] = useState("");
@@ -34,11 +22,7 @@ function App() {
 
   const [errorMessage, setErrorMessage] = useState("");
 
-  /*
-  =================================================
-  MODULE 1 - CATEGORY GENERATION
-  =================================================
-  */
+  /*MODULE 1 - CATEGORY GENERATION*/
 
 const generateCategory = async () => {
 
@@ -78,11 +62,7 @@ const generateCategory = async () => {
   }
 };
 
-  /*
-  =================================================
-  MODULE 2 - PROPOSAL GENERATION
-  =================================================
-  */
+  /*MODULE 2 - PROPOSAL GENERATION*/
 
   const generateProposal = async () => {
 
@@ -125,11 +105,7 @@ const generateCategory = async () => {
     }
   };
 
-  /*
-  =================================================
-  RESET FUNCTION (Better UX)
-  =================================================
-  */
+
 
   const resetAll = () => {
     setDescription("");
@@ -140,11 +116,7 @@ const generateCategory = async () => {
     setErrorMessage("");
   };
 
-  /*
-  =================================================
-  UI
-  =================================================
-  */
+  
 
   return (
     <div style={{ padding: 40, fontFamily: "Arial" }}>

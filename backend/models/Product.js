@@ -1,11 +1,6 @@
 const mongoose = require("mongoose");
 
-/*
-  ==============================
-  Product Schema
-  (AI Generated Category Storage)
-  ==============================
-*/
+
 
 const productSchema = new mongoose.Schema(
   {
@@ -62,11 +57,7 @@ const productSchema = new mongoose.Schema(
   }
 );
 
-/*
-  ==============================
-  Indexing for Performance
-  ==============================
-*/
+
 
 productSchema.index({ "ai_category_data.primary_category": 1 });
 productSchema.index({ createdAt: -1 });

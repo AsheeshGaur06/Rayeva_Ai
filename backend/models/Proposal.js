@@ -1,11 +1,6 @@
 const mongoose = require("mongoose");
 
-/*
-====================================================
-PROPOSAL MODEL
-Production Ready + Validation Enabled
-====================================================
-*/
+
 
 const proposalSchema = new mongoose.Schema({
 
@@ -85,11 +80,7 @@ const proposalSchema = new mongoose.Schema({
   timestamps: true
 });
 
-/*
-====================================================
-Indexing for Performance
-====================================================
-*/
+
 proposalSchema.index({ event: 1 });
 proposalSchema.index({ createdAt: -1 });
 

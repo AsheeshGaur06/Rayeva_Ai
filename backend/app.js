@@ -9,29 +9,19 @@ connectDB();
 
 const app = express();
 
-/*
-========================================
-  GLOBAL MIDDLEWARE
-========================================
-*/
 
-// Security CORS
 app.use(cors({
   origin: "*",
   methods: ["GET", "POST", "PUT", "DELETE"],
 }));
 
-// JSON Body Parsing
+
 app.use(express.json());
 
-// HTTP Request Logger (Assignment: Logging Visibility)
+
 app.use(morgan("dev"));
 
-/*
-========================================
-  ROUTES
-========================================
-*/
+
 
 app.get("/", (req, res) => {
   res.json({
@@ -43,11 +33,7 @@ app.get("/", (req, res) => {
 app.use("/api/category", require("./routes/categoryRoutes"));
 app.use("/api/proposal", require("./routes/proposalRoutes"));
 
-/*
-========================================
-  404 HANDLER
-========================================
-*/
+
 
 app.use((req, res) => {
   res.status(404).json({
@@ -56,11 +42,7 @@ app.use((req, res) => {
   });
 });
 
-/*
-========================================
-  GLOBAL ERROR HANDLER
-========================================
-*/
+
 
 app.use((err, req, res, next) => {
 

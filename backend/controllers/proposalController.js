@@ -2,12 +2,7 @@ const Proposal = require("../models/Proposal");
 const generateProposal = require("../services/aiProposalService");
 const AILog = require("../models/aiLog");
 
-/*
-====================================================
-AI Proposal Controller
-Production Ready + Assignment Optimized
-====================================================
-*/
+
 
 exports.createProposal = async (req, res) => {
 
@@ -15,11 +10,7 @@ exports.createProposal = async (req, res) => {
 
     const { budget, event, preference } = req.body;
 
-    /*
-    ----------------------------------------
-    INPUT VALIDATION
-    ----------------------------------------
-    */
+
 
     if (!budget || !event || !preference) {
       return res.status(400).json({
@@ -37,21 +28,12 @@ exports.createProposal = async (req, res) => {
       });
     }
 
-    /*
-    ----------------------------------------
-    CALL AI SERVICE
-    ----------------------------------------
-    */
+
 
     const { parsed, raw, prompt } =
       await generateProposal(numericBudget, event, preference);
 
-    /*
-    ----------------------------------------
-    SAFETY CHECK
-    Ensure AI returned valid structured data
-    ----------------------------------------
-    */
+
 
     if (!parsed || !parsed.recommended_products) {
       return res.status(500).json({
@@ -60,11 +42,7 @@ exports.createProposal = async (req, res) => {
       });
     }
 
-    /*
-    ----------------------------------------
-    SAVE TO DATABASE
-    ----------------------------------------
-    */
+
 
     const proposal = await Proposal.create({
       budget: numericBudget,
@@ -75,12 +53,7 @@ exports.createProposal = async (req, res) => {
       ai_response_raw: raw
     });
 
-    /*
-    ----------------------------------------
-    LOG PROMPT + RESPONSE
-    (Required for Assignment)
-    ----------------------------------------
-    */
+
 
     await AILog.create({
       module: "AI Proposal Generator",
@@ -88,11 +61,7 @@ exports.createProposal = async (req, res) => {
       response: raw
     });
 
-    /*
-    ----------------------------------------
-    SUCCESS RESPONSE
-    ----------------------------------------
-    */
+
 
     return res.status(201).json({
       success: true,

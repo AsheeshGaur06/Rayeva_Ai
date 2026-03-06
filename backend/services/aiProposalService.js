@@ -5,18 +5,11 @@ const openai = new OpenAI({
   baseURL: "https://api.groq.com/openai/v1"
 });
 
-/*
-=====================================================
-AI PROPOSAL GENERATOR
-Production Safe + Business Logic Controlled
-=====================================================
-*/
+
 
 async function generateProposal(budget, event, preference) {
 
-  // ============================
-  // INPUT VALIDATION
-  // ============================
+
   if (!budget || !event || !preference) {
     throw new Error("Budget, event and preference are required");
   }
@@ -27,9 +20,7 @@ async function generateProposal(budget, event, preference) {
     throw new Error("Budget must be greater than 0");
   }
 
-  // ============================
-  // PROMPT ENGINEERING
-  // ============================
+
   const prompt = `
 You are a procurement AI for sustainable B2B commerce.
 
@@ -78,9 +69,7 @@ RULES:
 
     let text = response.choices[0].message.content;
 
-    // ============================
-    // CLEAN AI OUTPUT
-    // ============================
+
     text = text
       .replace(/```json/g, "")
       .replace(/```/g, "")
@@ -111,16 +100,12 @@ RULES:
       parsed = JSON.parse(cleaned);
     }
 
-    // ============================
-    // STRUCTURE VALIDATION
-    // ============================
+
     if (!Array.isArray(parsed.recommended_products)) {
       throw new Error("AI missing recommended_products array");
     }
 
-    // ============================
-    // BUSINESS LOGIC ENFORCEMENT
-    // ============================
+
 
     let calculatedTotal = 0;
 
@@ -141,9 +126,7 @@ RULES:
       };
     });
 
-    // ============================
-    // BUDGET CONTROL (Strict)
-    // ============================
+
     if (calculatedTotal > budget) {
 
       console.warn("AI exceeded budget — trimming products");
@@ -163,9 +146,7 @@ RULES:
       calculatedTotal = runningTotal;
     }
 
-    // ============================
-    // ENSURE MINIMUM 3 PRODUCTS
-    // ============================
+
     if (parsed.recommended_products.length < 3) {
 
       const fallback = [
@@ -198,16 +179,12 @@ RULES:
 
     }
 
-    // ============================
-    // FINAL CALCULATION
-    // ============================
+
 
     parsed.total_budget_used = calculatedTotal;
     parsed.remaining_budget = budget - calculatedTotal;
 
-    // ============================
-    // FORCE CLEAN IMPACT SUMMARY
-    // ============================
+    
 
     parsed.impact_positioning =
       "This sustainable product mix supports eco-friendly corporate events using bamboo, recycled paper, and reusable materials. It helps reduce plastic waste while promoting environmentally responsible business practices.";

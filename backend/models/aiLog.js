@@ -1,12 +1,6 @@
 const mongoose = require("mongoose");
 
-/*
-====================================================
-AI LOG MODEL
-Mandatory for Assignment:
-Prompt + Response Logging
-====================================================
-*/
+
 
 const aiLogSchema = new mongoose.Schema({
 
@@ -30,11 +24,7 @@ const aiLogSchema = new mongoose.Schema({
   timestamps: true
 });
 
-/*
-====================================================
-Indexing for Faster Debug / Audit Search
-====================================================
-*/
+
 
 aiLogSchema.index({ module: 1 });
 aiLogSchema.index({ createdAt: -1 });

@@ -1,10 +1,6 @@
 const OpenAI = require("openai");
 
-/*
-  ==============================
-  Environment Validation
-  ==============================
-*/
+
 if (!process.env.GROQ_API_KEY) {
   throw new Error("GROQ_API_KEY is missing in environment variables");
 }
@@ -14,11 +10,7 @@ const openai = new OpenAI({
   baseURL: "https://api.groq.com/openai/v1"
 });
 
-/*
-  ==============================
-  Allowed Categories (Business Rule)
-  ==============================
-*/
+
 const ALLOWED_CATEGORIES = [
   "Packaging",
   "Corporate Gifts",
@@ -33,11 +25,7 @@ async function generateCategory(description) {
     throw new Error("Product description must be at least 10 characters");
   }
 
-  /*
-    ==============================
-    Prompt Engineering
-    ==============================
-  */
+
 
   const prompt = `
 You are an AI assistant for a sustainable B2B ecommerce platform.
@@ -88,11 +76,7 @@ ${description}
 
     let text = response?.choices?.[0]?.message?.content || "";
 
-    /*
-      ==============================
-      Clean AI Output
-      ==============================
-    */
+
 
     text = text
       .replace(/```json/g, "")
@@ -105,7 +89,7 @@ ${description}
       parsed = JSON.parse(text);
     } catch (error) {
 
-      // Backup JSON extraction
+      
       const match = text.match(/\{[\s\S]*\}/);
 
       if (!match) {
@@ -115,23 +99,17 @@ ${description}
       parsed = JSON.parse(match[0]);
     }
 
-    /*
-      ==============================
-      Business Logic Validation
-      ==============================
-    */
 
-    // Validate primary category
     if (!ALLOWED_CATEGORIES.includes(parsed.primary_category)) {
       parsed.primary_category = "Corporate Gifts";
     }
 
-    // Validate SEO tags
+    
     if (!Array.isArray(parsed.seo_tags)) {
       parsed.seo_tags = [];
     }
 
-    // Ensure 5–10 tags
+    
     if (parsed.seo_tags.length < 5) {
       parsed.seo_tags.push(
         "sustainable product",
@@ -144,7 +122,7 @@ ${description}
 
     parsed.seo_tags = [...new Set(parsed.seo_tags)].slice(0, 10);
 
-    // Validate sustainability filters
+    
     if (!Array.isArray(parsed.sustainability_filters) || parsed.sustainability_filters.length === 0) {
       parsed.sustainability_filters = [
         "Recycled",

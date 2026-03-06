@@ -2,12 +2,7 @@ const Product = require("../models/Product");
 const generateCategory = require("../services/aiCategoryService");
 const AILog = require("../models/aiLog");
 
-/*
-  =====================================================
-  AI AUTO CATEGORY CONTROLLER
-  Production Safe + Validation + Logging
-  =====================================================
-*/
+
 
 exports.createProduct = async (req, res) => {
 
@@ -15,9 +10,7 @@ exports.createProduct = async (req, res) => {
 
     const { name, description } = req.body;
 
-    // ===============================
-    // INPUT VALIDATION
-    // ===============================
+
     if (!description || description.trim().length < 10) {
       return res.status(400).json({
         success: false,
@@ -25,17 +18,12 @@ exports.createProduct = async (req, res) => {
       });
     }
 
-    // ===============================
-    // CALL AI SERVICE
-    // ===============================
+
     const aiResult = await generateCategory(description);
 
     const parsed = aiResult.parsed;
 
-    // ===============================
-    // SAFETY CHECK – AI RESPONSE
-    // Prevent crash if AI returns invalid structure
-    // ===============================
+
     if (
       !parsed ||
       !parsed.primary_category ||
@@ -49,9 +37,7 @@ exports.createProduct = async (req, res) => {
       });
     }
 
-    // ===============================
-    // SAVE TO DATABASE
-    // ===============================
+
     const product = await Product.create({
       name: name || "Unnamed Product",
       description,
@@ -59,7 +45,7 @@ exports.createProduct = async (req, res) => {
       ai_category_data: {
         primary_category: parsed.primary_category,
         sub_category: parsed.sub_category,
-        seo_tags: parsed.seo_tags.slice(0, 10), // limit to 10
+        seo_tags: parsed.seo_tags.slice(0, 10), 
         sustainability_filters: parsed.sustainability_filters
       },
 
@@ -67,19 +53,14 @@ exports.createProduct = async (req, res) => {
       ai_response_raw: aiResult.raw
     });
 
-    // ===============================
-    // LOG PROMPT + RESPONSE
-    // (Mandatory for Assignment)
-    // ===============================
+
     await AILog.create({
       module: "AI Category Generator",
       prompt: aiResult.prompt,
       response: aiResult.raw
     });
 
-    // ===============================
-    // SUCCESS RESPONSE
-    // ===============================
+
     return res.status(201).json({
       success: true,
       message: "Category generated successfully",
