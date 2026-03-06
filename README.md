@@ -1,38 +1,16 @@
-Below is a **complete professional `README.md`** you can directly put in your **GitHub repository** for the **Rayeva AI Systems Assignment**.
 
-It is written in **simple English but still professional**, which is good for internship reviewers.
-
-Just **copy → paste into `README.md` in GitHub**.
-
----
 
 # Rayeva – AI Systems Assignment
 
-**Role:** Full Stack / AI Intern
-**Focus:** Applied AI for Sustainable Commerce
 
-This project demonstrates how **AI can automate sustainable commerce workflows** such as product categorization, B2B proposal generation, impact reporting, and customer support automation.
 
-The system uses **LLM-powered AI with business logic validation** to produce **structured, production-ready outputs**.
 
----
-
-# Project Objective
-
-The goal of this project is to build **AI-powered modules that improve operational efficiency in sustainable commerce platforms**.
-
-Key objectives:
-
-• Reduce manual catalog management
-• Generate intelligent B2B product proposals
-• Provide sustainability impact reporting
-• Automate customer support using AI
 
 ---
 
 # Implemented Modules
 
-The assignment required implementing **any two modules fully** and outlining architecture for the remaining modules.
+
 
 The following modules were implemented:
 
