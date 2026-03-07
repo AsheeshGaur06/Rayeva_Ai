@@ -3,7 +3,7 @@
 # Rayeva – AI Systems Assignment
 
 
-
+[![](https://img.shields.io/badge/Live_App-Click_Here-brightgreen)](https://rayeva-ai-ten.vercel.app/)
 
 
 ---
